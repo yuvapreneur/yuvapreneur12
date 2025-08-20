@@ -326,11 +326,23 @@
 
     // Change button text
     const btn = document.getElementById("submitBtn");
-    btn.textContent = "Enroll Now";
+    btn.textContent = "Redirecting to payment...";
     btn.disabled = true;
 
     // Redirect to Razorpay
     window.location.href = razorpayUrl;
+  });
+
+  // After payment success → Auto-download PDF
+  document.addEventListener("DOMContentLoaded", function() {
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("payment") === "success") {
+      showMessage("✅ Payment successful! Download will start...");
+
+      setTimeout(function() {
+        window.location.href = "https://yuvapreneur.in/downloads/digital-marketing-course.pdf";
+      }, 1500);
+    }
   });
 
   function buyBonus(price) {
@@ -340,7 +352,7 @@
   function showMessage(msg) {
     const msgDiv = document.getElementById("message");
     msgDiv.textContent = msg;
-    setTimeout(() => (msgDiv.textContent = ""), 4000);
+    setTimeout(() => (msgDiv.textContent = ""), 6000);
   }
 </script>
 
